@@ -9,9 +9,9 @@ let package = Package(
 		.library(name: "PerfectHTTP", targets: ["PerfectHTTP"])
 	],
 	dependencies: [
-        .package(name: "PerfectLib", url: "https://github.com/123FLO321/Perfect.git", .branch("swift5")),
-        .package(name: "PerfectNet", url: "https://github.com/123FLO321/Perfect-Net.git", .branch("swift5")),
-        .package(name: "LinuxBridge", url: "https://github.com/123FLO321/Perfect-LinuxBridge.git", .branch("swift5"))
+        .package(name: "PerfectLib", url: "https://github.com/SkOODaT/Perfect.git", .branch("SKOODAT")),
+        .package(name: "PerfectNet", url: "https://github.com/SkOODaT/Perfect-Net.git", .branch("SKOODAT")),
+        .package(name: "LinuxBridge", url: "https://github.com/SkOODaT/Perfect-LinuxBridge.git", .branch("SKOODAT"))
 	],
  	targets: [
 		.target(name: "PerfectHTTP", dependencies: ["PerfectLib", "PerfectNet", "LinuxBridge"]),
@@ -28,8 +28,8 @@ let package = Package(
 		.library(name: "PerfectHTTP", targets: ["PerfectHTTP"])
 	],
 	dependencies: [
-        .package(name: "PerfectLib", url: "https://github.com/123FLO321/Perfect.git", .branch("swift5")),
-        .package(name: "PerfectNet", url: "https://github.com/123FLO321/Perfect-Net.git", .branch("swift5"))
+        .package(name: "PerfectLib", url: "https://github.com/SkOODaT/Perfect.git", .branch("SKOODAT")),
+        .package(name: "PerfectNet", url: "https://github.com/SkOODaT/Perfect-Net.git", .branch("SKOODAT"))
 	], targets: [
 		.target(name: "PerfectHTTP", dependencies: ["PerfectLib", "PerfectNet"]),
 		.testTarget(name: "PerfectHTTPTests", dependencies: ["PerfectHTTP", "PerfectNet"])
