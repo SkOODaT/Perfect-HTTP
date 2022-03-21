@@ -20,11 +20,11 @@
 #if os(Linux)
 	import Foundation
 	import LinuxBridge
-	let S_IRUSR = __S_IREAD
-	let S_IRGRP	= (S_IRUSR >> 3)
-	let S_IWGRP	= (SwiftGlibc.S_IWUSR >> 3)
-	let S_IROTH = (S_IRGRP >> 3)
-	let S_IWOTH = (S_IWGRP >> 3)
+	let S_IRUSR : UInt32 = UInt32(__S_IREAD)
+	let S_IRGRP	: UInt32 = UInt32(S_IRUSR >> 3)
+	let S_IWGRP	: UInt32 = UInt32(SwiftGlibc.S_IWUSR >> 3)
+	let S_IROTH : UInt32 = UInt32(S_IRGRP >> 3)
+	let S_IWOTH : UInt32 = UInt32(S_IWGRP >> 3)
 #else
 	import Darwin
 #endif
@@ -359,26 +359,29 @@ public final class MimeReader {
 					}
 					// write as much data as we reasonably can
 					var writeEnd = position
-                    let qPtr = byts.withUnsafeBufferPointer { $0.baseAddress! }
-					while writeEnd < end {
-						
-						if qPtr[writeEnd] == mime_cr {
-							if end - writeEnd < 2 {
-								break
-							}
-							if qPtr[writeEnd + 1] == mime_lf {
-								if isBoundaryStart(bytes: byts, start: writeEnd + 2) {
-									break
-								} else if end - writeEnd - 2 < self.boundary.count {
-									// we are at the eol, but check to see if the next line may be starting a boundary
-									if end - writeEnd < 4 || (qPtr[writeEnd + 2] == mime_dash && qPtr[writeEnd + 3] == mime_dash) {
+					byts.withUnsafeBufferPointer { buffered in
+						if let qPtr = buffered.baseAddress {
+							while writeEnd < end {
+
+								if qPtr[writeEnd] == mime_cr {
+									if end - writeEnd < 2 {
 										break
 									}
+									if qPtr[writeEnd + 1] == mime_lf {
+										if isBoundaryStart(bytes: byts, start: writeEnd + 2) {
+											break
+										} else if end - writeEnd - 2 < self.boundary.count {
+											// we are at the eol, but check to see if the next line may be starting a boundary
+											if end - writeEnd < 4 || (qPtr[writeEnd + 2] == mime_dash && qPtr[writeEnd + 3] == mime_dash) {
+												break
+											}
+										}
+									}
 								}
+
+								writeEnd += 1
 							}
 						}
-						
-						writeEnd += 1
 					}
 					do {
 						let length = writeEnd - position
